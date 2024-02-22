@@ -3,9 +3,12 @@ image: gitpod/workspace-full:latest
 
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
-  - name: Script Task
-    init: echo 'init script' # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
-    command: echo 'start script'
+  - name: Instalar python
+    init: pyenv instal 3.10.7
+  - name: Instalar dependencias
+    init: pip install -r requirements.txt
+  - name: Correr ambiente
+    init: pyenv local 3.10.7
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
