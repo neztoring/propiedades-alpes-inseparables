@@ -1,0 +1,17 @@
+[project]
+name = "propiedadesalpes"
+version = "1.0.0"
+authors = [
+  { name="Los inseparables", email="" },
+]
+description = "Proyecto materia no moniliticos"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+pythonpath = [
+  ".", "src",
+]
