@@ -1,12 +1,11 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect, jsonify
-from flask_swagger import swagger
+from flask import Flask
 
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 def importar_modelos_alchemy():
-    import propiedadesalpes.modulos.propiedades.infraestructura.dto
+    pass
 
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
@@ -18,10 +17,10 @@ def create_app(configuracion=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
      # Inicializa la DB
-    from ..config.db import init_db
+    from src.propiedadesalpes.config.db import init_db
     init_db(app)
 
-    from ..config.db import db
+    from src.propiedadesalpes.config.db import db
 
     importar_modelos_alchemy()
 

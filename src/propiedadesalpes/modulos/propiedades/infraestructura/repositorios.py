@@ -1,7 +1,7 @@
-from propiedadesalpes.config.db import db
-from propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
-from propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
-from propiedadesalpes.modulos.propiedades.dominio.fabricas import FabricaHistorico
+from src.propiedadesalpes.config.db import db
+from src.propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
+from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
+from src.propiedadesalpes.modulos.propiedades.dominio.fabricas import FabricaHistorico
 from .dto import Transaccion as TransaccionDTO
 from .mapeadores import MapeadorTransaccion
 from uuid import UUID
@@ -28,10 +28,10 @@ class RepositorioTransaccionesSQLite(RepositorioTransacciones):
         db.session.add(transaccion_dto)
         db.session.commit()
 
-    def actualizar(self, reserva: Reserva):
+    def actualizar(self, transaccion: Transaccion):
         # TODO
         raise NotImplementedError
 
-    def eliminar(self, reserva_id: UUID):
+    def eliminar(self, transaccion_id: UUID):
         # TODO
         raise NotImplementedError

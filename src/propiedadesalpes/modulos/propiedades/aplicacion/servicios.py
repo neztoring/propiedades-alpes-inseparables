@@ -1,7 +1,8 @@
-from propiedadesalpes.seedwork.aplicacion.servicios import Servicio 
-from propiedadesalpes.modulos.propiedades.infraestructura.fabricas import FabricaRepositorio
-from propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
-from propiedadesalpes.modulos.propiedades.dominio.fabricas import FabricaHistorico
+from src.propiedadesalpes.seedwork.aplicacion.servicios import Servicio
+from src.propiedadesalpes.modulos.propiedades.infraestructura.fabricas import FabricaRepositorio
+from src.propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
+from src.propiedadesalpes.modulos.propiedades.dominio.fabricas import FabricaHistorico
+from .dto import TransaccionDTO
 
 from .mapeadores import MapeadorTransaccion
 

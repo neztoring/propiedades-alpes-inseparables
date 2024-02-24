@@ -1,4 +1,4 @@
-from propiedades.seedwork.dominio.reglas import ReglaNegocio
+from src.propiedadesalpes.seedwork.dominio.reglas import ReglaNegocio
 
 class TienePropiedad(ReglaNegocio):
 

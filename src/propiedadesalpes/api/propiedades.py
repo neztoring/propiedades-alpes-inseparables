@@ -1,12 +1,11 @@
-import propiedadesalpes.seedwork.presentacion.api as api
+import src.propiedadesalpes.seedwork.presentacion.api as api
 import json
-from propiedadesalpes.modulos.propiedades.aplicacion.servicios import ServicioTransaccion
-from propiedadesalpes.modulos.propiedades.aplicacion.dto import TransaccionDTO
-from propiedadesalpes.seedwork.dominio.excepciones import ExcepcionDominio
+from src.propiedadesalpes.modulos.propiedades.aplicacion.servicios import ServicioTransaccion
+from src.propiedadesalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
-from flask import redirect, render_template, request, session, url_for
+from flask import request
 from flask import Response
-from propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccionDTOJson
+from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccionDTOJson
 
 bp = api.crear_blueprint('propiedades', '/propiedades')
 
@@ -19,7 +18,7 @@ def reservar():
         transaction_dto = map_transaction.externo_a_dto(transaction_dict)
 
         st = ServicioTransaccion()
-        dto_final = st.crear_transaccion(reserva_dto)
+        dto_final = st.crear_transaccion(transaction_dto)
 
         return map_transaction.dto_a_externo(dto_final)
     except ExcepcionDominio as e:
