@@ -33,6 +33,6 @@ class ServicioTransaccion(Servicio):
 
         return self.fabrica_historicos.crear_objeto(transaccion, mapeador_transaccion)
 
-    def obtener_transaccion_por_id(self, id) -> dict[str, Any]:
+    def obtener_transaccion_por_id(self, id) -> TransaccionDTO:
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
         return repositorio.obtener_por_id(id).__dict__

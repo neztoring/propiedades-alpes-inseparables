@@ -3,7 +3,8 @@ from src.propiedadesalpes.seedwork.dominio.fabricas import Fabrica
 from src.propiedadesalpes.seedwork.dominio.repositorios import Repositorio
 from src.propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
 from .repositorios import RepositorioTransaccionesSQLite
-from .excepciones import ExcepcionFabrica
+from .excepciones import ExcepcionFabrica, NoExisteImplementacionParaTipoFabricaExcepcion
+
 
 @dataclass
 class FabricaRepositorio(Fabrica):

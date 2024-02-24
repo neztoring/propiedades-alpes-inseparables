@@ -16,7 +16,7 @@ class RepositorioTransaccionesSQLite(RepositorioTransacciones):
         return self._fabrica_historicos
 
     def obtener_por_id(self, id: UUID) -> Transaccion:
-        transaccion_dto = db.session.query(Transaccion).filter_by(id=str(id)).one()
+        transaccion_dto = db.session.query(TransaccionDTO).filter_by(id=str(id)).one()
         return self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion())
 
     def obtener_todos(self) -> list[Transaccion]:

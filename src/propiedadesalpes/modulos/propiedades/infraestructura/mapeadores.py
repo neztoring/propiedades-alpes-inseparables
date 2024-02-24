@@ -11,7 +11,7 @@ class MapeadorTransaccion(Mapeador):
         transaccion_dto = TransaccionDTO()
         transaccion_dto.fecha_creacion = entidad.fecha_creacion
         transaccion_dto.fecha_actualizacion = entidad.fecha_actualizacion
-        transaccion_dto.id = str(entidad.id)
+        transaccion_dto.id = entidad.id
         transaccion_dto.id_propiedad = entidad.id_propiedad
 
         return transaccion_dto

@@ -9,6 +9,7 @@ from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import Mapea
 
 bp = api.crear_blueprint('propiedades', '/propiedades')
 
+
 @bp.route('/transaccion', methods=('POST',))
 def registrar_transaccion():
     try:
@@ -23,12 +24,13 @@ def registrar_transaccion():
     except ExcepcionDominio as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')
 
+
 @bp.route('/transaccion', methods=('GET',))
 @bp.route('/transaccion/<id>', methods=('GET',))
 def dar_transaccion(id=None):
     if id:
         st = ServicioTransaccion()
-        
+
         return st.obtener_transaccion_por_id(id)
     else:
         return [{'message': 'GET!'}]
