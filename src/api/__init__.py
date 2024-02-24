@@ -5,6 +5,9 @@ from flask_swagger import swagger
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+def importar_modelos_alchemy():
+    import propiedadesalpes.modulos.propiedades.infraestructura.dto
+
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
     app = Flask(__name__, instance_relative_config=True)
@@ -19,6 +22,12 @@ def create_app(configuracion=None):
     init_db(app)
 
     from ..config.db import db
+
+    importar_modelos_alchemy()
+
+    from . import propiedades
+
+    app.register_blueprint(propiedades.bp)
 
     with app.app_context():
         db.create_all()

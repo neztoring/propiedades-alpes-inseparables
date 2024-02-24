@@ -13,4 +13,4 @@ class TransaccionDTO(DTO):
     fecha_creacion: str = field(default_factory=str)
     fecha_actualizacion: str = field(default_factory=str)
     id: str = field(default_factory=str)
-    propiedad: PropiedadDTO = field()
+    id_propiedad: str = field(default_factory=str)
