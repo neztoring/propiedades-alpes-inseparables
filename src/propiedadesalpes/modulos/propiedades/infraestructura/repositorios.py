@@ -16,12 +16,13 @@ class RepositorioTransaccionesSQLite(RepositorioTransacciones):
         return self._fabrica_historicos
 
     def obtener_por_id(self, id: UUID) -> Transaccion:
-        transaccion_dto = db.session.query(Transaccion).filter_by(id=str(id)).one()
+        transaccion_dto = db.session.query(TransaccionDTO).filter_by(id=str(id)).one()
         return self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion())
 
     def obtener_todos(self) -> list[Transaccion]:
-        # TODO
-        raise NotImplementedError
+        list_transaccion_dto = db.session.query(TransaccionDTO)
+        list_transaction: list[Transaccion] = list(map(lambda transaccion_dto: self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion()), list_transaccion_dto))
+        return list_transaction
 
     def agregar(self, transaccion: Transaccion):
         transaccion_dto = self.fabrica_historicos.crear_objeto(transaccion, MapeadorTransaccion())
