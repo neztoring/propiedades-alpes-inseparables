@@ -10,7 +10,7 @@ from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import Mapea
 bp = api.crear_blueprint('propiedades', '/propiedades')
 
 @bp.route('/transaccion', methods=('POST',))
-def reservar():
+def registrar_transaccion():
     try:
         transaction_dict = request.json
 
@@ -26,7 +26,7 @@ def reservar():
 
 @bp.route('/transaccion', methods=('GET',))
 @bp.route('/transaccion/<id>', methods=('GET',))
-def dar_reserva(id=None):
+def dar_transaccion(id=None):
     if id:
         st = ServicioTransaccion()
         

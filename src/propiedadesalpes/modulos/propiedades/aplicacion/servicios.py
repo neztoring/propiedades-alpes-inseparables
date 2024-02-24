@@ -5,6 +5,8 @@ from src.propiedadesalpes.modulos.propiedades.dominio.fabricas import FabricaHis
 from .dto import TransaccionDTO
 
 from .mapeadores import MapeadorTransaccion
+from ..dominio.entidades import Transaccion
+
 
 class ServicioTransaccion(Servicio):
 

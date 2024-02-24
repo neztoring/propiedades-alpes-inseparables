@@ -13,7 +13,6 @@ class _FabricaTransaccion(Fabrica):
             return mapeador.entidad_a_dto(obj)
         else:
             transaccion: Transaccion = mapeador.dto_a_entidad(obj)
-
             self.validar_regla(TienePropiedad(transaccion.id_propiedad))
             
             return transaccion

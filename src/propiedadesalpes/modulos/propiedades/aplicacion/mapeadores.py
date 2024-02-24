@@ -1,9 +1,12 @@
 from .dto import TransaccionDTO
 from src.propiedadesalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador as RepMap
-from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
+# from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
 
 from datetime import datetime
+
+from ..dominio.entidades import Transaccion
+
 
 class MapeadorTransaccionDTOJson(AppMap):
 
@@ -23,7 +26,6 @@ class MapeadorTransaccion(RepMap):
 
 
     def entidad_a_dto(self, entidad: Transaccion) -> TransaccionDTO:
-        
         fecha_creacion = entidad.fecha_creacion.strftime(self._FORMATO_FECHA)
         fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
         _id = str(entidad.id)
@@ -33,4 +35,4 @@ class MapeadorTransaccion(RepMap):
 
     def dto_a_entidad(self, dto: TransaccionDTO) -> Transaccion:
         transaccion = Transaccion()
-        return reserva
+        return transaccion
