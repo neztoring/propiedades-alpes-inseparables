@@ -36,3 +36,7 @@ class ServicioTransaccion(Servicio):
     def obtener_transaccion_por_id(self, id) -> TransaccionDTO:
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
         return repositorio.obtener_por_id(id).__dict__
+
+    def obtener_todos(self) -> list[TransaccionDTO]:
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
+        return repositorio.obtener_todos()

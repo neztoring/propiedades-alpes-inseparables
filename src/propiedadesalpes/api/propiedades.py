@@ -3,7 +3,7 @@ import json
 from src.propiedadesalpes.modulos.propiedades.aplicacion.servicios import ServicioTransaccion
 from src.propiedadesalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
-from flask import request
+from flask import request, jsonify
 from flask import Response
 from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccionDTOJson
 
@@ -28,9 +28,8 @@ def registrar_transaccion():
 @bp.route('/transaccion', methods=('GET',))
 @bp.route('/transaccion/<id>', methods=('GET',))
 def dar_transaccion(id=None):
+    st = ServicioTransaccion()
     if id:
-        st = ServicioTransaccion()
-
         return st.obtener_transaccion_por_id(id)
     else:
-        return [{'message': 'GET!'}]
+        return jsonify(st.obtener_todos())

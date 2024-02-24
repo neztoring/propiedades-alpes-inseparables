@@ -20,8 +20,9 @@ class RepositorioTransaccionesSQLite(RepositorioTransacciones):
         return self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion())
 
     def obtener_todos(self) -> list[Transaccion]:
-        # TODO
-        raise NotImplementedError
+        list_transaccion_dto = db.session.query(TransaccionDTO)
+        list_transaction: list[Transaccion] = list(map(lambda transaccion_dto: self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion()), list_transaccion_dto))
+        return list_transaction
 
     def agregar(self, transaccion: Transaccion):
         transaccion_dto = self.fabrica_historicos.crear_objeto(transaccion, MapeadorTransaccion())
