@@ -1,20 +1,9 @@
-# Image of workspace. Learn more: https://www.gitpod.io/docs/configure/workspaces/workspace-image
-image: gitpod/workspace-full:latest
-
-# List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
-  - name: Instalar python
-    init: pyenv instal 3.10.7
+  - name: Instalar Python
+    init: > 
+      pyenv install 3.10.7 -f &&
+      pyenv local 3.10.7 &&
+      gp sync-done bundle
   - name: Instalar dependencias
-    init: pip install -r requirements.txt
-  - name: Correr ambiente
-    init: pyenv local 3.10.7
-
-# List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
-ports:
-  - name: Frontend
-    description: Port 3000 for the frontend
-    port: 3000
-    onOpen: open-preview
-
-# Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
+    init: gp sync-await bundle
+    command: pip install -r requirements.txt
