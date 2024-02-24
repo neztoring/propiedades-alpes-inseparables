@@ -16,7 +16,6 @@ def registrar_transaccion():
 
         map_transaction = MapeadorTransaccionDTOJson()
         transaction_dto = map_transaction.externo_a_dto(transaction_dict)
-
         st = ServicioTransaccion()
         dto_final = st.crear_transaccion(transaction_dto)
 

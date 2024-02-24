@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from src.propiedadesalpes.seedwork.aplicacion.servicios import Servicio
 from src.propiedadesalpes.modulos.propiedades.infraestructura.fabricas import FabricaRepositorio
 from src.propiedadesalpes.modulos.propiedades.dominio.repositorios import RepositorioTransacciones
@@ -23,13 +25,14 @@ class ServicioTransaccion(Servicio):
         return self._fabrica_historicos
 
     def crear_transaccion(self, transaccion_dto: TransaccionDTO) -> TransaccionDTO:
-        transaccion: Transaccion = self.fabrica_historicos.crear_objeto(transaccion_dto, MapeadorTransaccion())
+        mapeador_transaccion = MapeadorTransaccion()
+        transaccion: Transaccion = self.fabrica_historicos.crear_objeto(transaccion_dto, mapeador_transaccion)
 
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
         repositorio.agregar(transaccion)
 
-        return self.fabrica_historicos.crear_objeto(transaccion, MapeadorTransaccion())
+        return self.fabrica_historicos.crear_objeto(transaccion, mapeador_transaccion)
 
-    def obtener_transaccion_por_id(self, id) -> TransaccionDTO:
+    def obtener_transaccion_por_id(self, id) -> dict[str, Any]:
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
         return repositorio.obtener_por_id(id).__dict__

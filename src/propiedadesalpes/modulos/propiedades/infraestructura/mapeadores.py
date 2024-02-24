@@ -3,6 +3,9 @@ from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador
 from .dto import Transaccion as TransaccionDTO
 
 class MapeadorTransaccion(Mapeador):
+
+    def obtener_tipo(self) -> type:
+        return Transaccion.__class__
     def entidad_a_dto(self, entidad: Transaccion) -> TransaccionDTO:
         
         transaccion_dto = TransaccionDTO()

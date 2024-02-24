@@ -1,8 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-from src.propiedadesalpes.seedwork.dominio.entidades import Entidad
+from src.propiedadesalpes.seedwork.dominio.entidades import Entidad, AgregacionRaiz
 
 @dataclass
 class Transaccion(Entidad):
-    def __init__(self):
-        self.id_propiedad = None
+    id_propiedad: str = field(default_factory=str)
