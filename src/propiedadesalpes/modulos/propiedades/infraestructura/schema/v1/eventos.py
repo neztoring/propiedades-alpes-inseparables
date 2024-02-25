@@ -1,11 +1,14 @@
 from pulsar.schema import *
-from propiedadesalpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
+from src.propiedadesalpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
+import json
 
 class EventoTransaccionCreadaPayload(Record):
-    id_reserva = String()
-    id_cliente = String()
-    estado = String()
+    id_propiedad = String()
     fecha_creacion = Long()
 
 class EventoTransaccionCreada(EventoIntegracion):
     data = EventoTransaccionCreadaPayload()
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)

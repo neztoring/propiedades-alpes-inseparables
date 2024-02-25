@@ -1,12 +1,12 @@
-from propiedadesalpes.seedwork.aplicacion.comandos import Comando
-from propiedadesalpes.modulos.propiedades.aplicacion.dto import TransaccionDTO
+from src.propiedadesalpes.seedwork.aplicacion.comandos import Comando
+from src.propiedadesalpes.modulos.propiedades.aplicacion.dto import TransaccionDTO
 from .base import CrearTransaccionBaseHandler
 from dataclasses import dataclass
-from propiedadesalpes.seedwork.aplicacion.comandos import ejecutar_comando as comando
-from propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
-from propiedadesalpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
-from propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccion
-from propiedadesalpes.modulos.propiedades.infraestructura.repositorios import RepositorioTransacciones
+from src.propiedadesalpes.seedwork.aplicacion.comandos import ejecutar_comando as comando
+from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
+from src.propiedadesalpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
+from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccion
+from src.propiedadesalpes.modulos.propiedades.infraestructura.repositorios import RepositorioTransacciones
 
 @dataclass
 class CrearTransaccion(Comando):
@@ -24,8 +24,8 @@ class CrearTransaccionHandler(CrearTransaccionBaseHandler):
             id_propiedad=comando.id_propiedad
         )
 
-        transaccion: Transaccion = self._fabrica_transacciones.crear_objeto(transaccion_dto, MapeadorTransaccion)
-        transaccion.crear_transaccion(transaccion) #TODO MBDC
+        transaccion: Transaccion = self._fabrica_transacciones.crear_objeto(transaccion_dto, MapeadorTransaccion())
+        transaccion.crear_transaccion(transaccion)
 
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioTransacciones.__class__)
 

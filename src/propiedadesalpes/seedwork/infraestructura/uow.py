@@ -1,10 +1,11 @@
-from enum import Enum
 from abc import ABC, abstractmethod
+from enum import Enum
 
-from propiedadesalpes.seedwork.dominio.entidades import AgregacionRaiz
+from src.propiedadesalpes.seedwork.dominio.entidades import AgregacionRaiz
 from pydispatch import dispatcher
 
 import pickle
+
 
 class Lock(Enum):
     OPTIMISTA = 1
@@ -16,17 +17,17 @@ class Batch:
         self.args = args
         self.lock = lock
         self.kwargs = kwargs
-    
+
 class UnidadTrabajo(ABC):
 
     def __enter__(self):
         return self
-    
+
     def __exit__(self, *args):
         self.rollback()
-    
+
     def _obtener_eventos(self, batches=None):
-        batches = self.batches if batches is None else []
+        batches = self.batches if batches is None else batches
         for batch in batches:
             for arg in batch.args:
                 if isinstance(arg, AgregacionRaiz):
@@ -43,7 +44,7 @@ class UnidadTrabajo(ABC):
 
     @abstractmethod
     def savepoints(self) -> list:
-        raise NotImplementedError
+        raise NotImplementedError                    
 
     def commit(self):
         self._publicar_eventos_post_commit()
@@ -52,24 +53,23 @@ class UnidadTrabajo(ABC):
     @abstractmethod
     def rollback(self, savepoint=None):
         self._limpiar_batches()
-
+    
     @abstractmethod
     def savepoint(self):
         raise NotImplementedError
-    
+
     def registrar_batch(self, operacion, *args, lock=Lock.PESIMISTA, **kwargs):
         batch = Batch(operacion, lock, *args, **kwargs)
         self.batches.append(batch)
         self._publicar_eventos_dominio(batch)
-    
+
     def _publicar_eventos_dominio(self, batch):
         for evento in self._obtener_eventos(batches=[batch]):
-            dispatcher.send(signal=f"{type(evento).__name__}Dominio", evento=evento)
-    
+            dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
+
     def _publicar_eventos_post_commit(self):
         for evento in self._obtener_eventos():
-            dispatcher.send(signal=f"{type(evento).__name__}Integracion", evento=evento)
-
+            dispatcher.send(signal=f'{type(evento).__name__}Integracion', evento=evento)
 
 def is_flask():
     try:
@@ -77,15 +77,17 @@ def is_flask():
         return True
     except Exception as e:
         return False
-    
+
 def registrar_unidad_de_trabajo(serialized_obj):
-    from propiedadesalpes.config.uow import UnidadTrabajoSQLAlchemy
+    from src.propiedadesalpes.config.uow import UnidadTrabajoSQLAlchemy
     from flask import session
-    session["uow"] = serialized_obj
+    
+
+    session['uow'] = serialized_obj
 
 def flask_uow():
     from flask import session
-    from propiedadesalpes.config.uow import UnidadTrabajoSQLAlchemy
+    from src.propiedadesalpes.config.uow import UnidadTrabajoSQLAlchemy
     if session.get('uow'):
         return session['uow']
     else:
@@ -95,17 +97,19 @@ def flask_uow():
 
 def unidad_de_trabajo() -> UnidadTrabajo:
     if is_flask():
-        return pickle.loads(flask_uow()) 
+        return pickle.loads(flask_uow())
     else:
-        raise Exception("No hay unidad de trabajo")
+        raise Exception('No hay unidad de trabajo')
 
 def guardar_unidad_trabajo(uow: UnidadTrabajo):
     if is_flask():
         registrar_unidad_de_trabajo(pickle.dumps(uow))
     else:
-        raise Exception("No hay unidad de trabajo")
+        raise Exception('No hay unidad de trabajo')
+
 
 class UnidadTrabajoPuerto:
+
     @staticmethod
     def commit():
         uow = unidad_de_trabajo()
@@ -123,14 +127,15 @@ class UnidadTrabajoPuerto:
         uow = unidad_de_trabajo()
         uow.savepoint()
         guardar_unidad_trabajo(uow)
-    
+
     @staticmethod
     def dar_savepoints():
         uow = unidad_de_trabajo()
         return uow.savepoints()
-    
+
     @staticmethod
-    def registrar_batch(self, operacion, *args, lock=Lock.PESIMISTA, **kwargs):
+    def registrar_batch(operacion, *args, lock=Lock.PESIMISTA, **kwargs):
         uow = unidad_de_trabajo()
-        uow.registrar_batch(operacion, *args, lock, **kwargs)
+        uow._limpiar_batches()
+        uow.registrar_batch(operacion, *args, lock=lock, **kwargs)
         guardar_unidad_trabajo(uow)

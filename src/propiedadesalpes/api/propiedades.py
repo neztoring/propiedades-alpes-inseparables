@@ -28,7 +28,7 @@ def registrar_transaccion():
     except ExcepcionDominio as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')
 
-@bp.route("/transaccion-asincrona", methods=('POST'))
+@bp.route("/transaccion-asincrona", methods=('POST',))
 def registrar_transaccion_asincrona():
     try:
 
@@ -56,7 +56,7 @@ def dar_transaccion(id=None):
 
 @bp.route('/transaccion-query', methods=('GET',))
 @bp.route('/transaccion-query/<id>', methods=('GET',))
-def dar_transaccion(id=None):
+def dar_transaccion_query(id=None):
     st = ServicioTransaccion()
     if id:
         query_resultado = ejecutar_query(ObtenerTransaccion(id))
