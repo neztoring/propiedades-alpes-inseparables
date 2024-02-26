@@ -40,7 +40,7 @@ def create_app(configuracion=None):
         consumidor_thread = threading.Thread(target=comenzar_consumidor)
         consumidor_thread.start()
     
-    @app.route("/health")
+    @app.route("/health-status")
     def health():
         return {"status": "up"}
 
