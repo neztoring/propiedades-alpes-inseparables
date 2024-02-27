@@ -1,8 +1,8 @@
 import pulsar
 from pulsar.schema import *
 
-from src.propiedadesalpes.modulos.propiedades.infraestructura.schema.v1.eventos import EventoTransaccionCreada, EventoTransaccionCreadaPayload
-from src.propiedadesalpes.modulos.propiedades.infraestructura.schema.v1.comandos import ComandoCrearTransaccion, ComandoCrearTransaccionPayload
+from src.propiedadesalpes.modulos.mercado.infraestructura.schema.v1.eventos import EventoTransaccionCreada, EventoTransaccionCreadaPayload
+from src.propiedadesalpes.modulos.mercado.infraestructura.schema.v1.comandos import ComandoCrearTransaccion, ComandoCrearTransaccionPayload
 from src.propiedadesalpes.seedwork.infraestructura import utils
 
 import datetime, pika, json

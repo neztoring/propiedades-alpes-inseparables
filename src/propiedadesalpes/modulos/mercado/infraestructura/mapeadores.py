@@ -1,4 +1,4 @@
-from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
+from src.propiedadesalpes.modulos.mercado.dominio.entidades import Transaccion
 from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador
 from .dto import Transaccion as TransaccionDTO
 
