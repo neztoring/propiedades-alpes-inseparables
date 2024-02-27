@@ -1,5 +1,5 @@
 from src.propiedadesalpes.seedwork.aplicacion.handlers import Handler
-from src.propiedadesalpes.modulos.propiedades.infraestructura.despachadores import Despachador
+from src.propiedadesalpes.modulos.mercado.infraestructura.despachadores import Despachador
 
 class HandlerTransaccionIntegracion(Handler):
 

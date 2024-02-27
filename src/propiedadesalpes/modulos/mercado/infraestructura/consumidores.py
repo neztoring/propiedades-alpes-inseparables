@@ -1,7 +1,7 @@
 import pika, json
 
-from src.propiedadesalpes.modulos.propiedades.infraestructura.schema.v1.eventos import EventoTransaccionCreada
-from src.propiedadesalpes.modulos.propiedades.infraestructura.schema.v1.comandos import ComandoCrearTransaccion
+from src.propiedadesalpes.modulos.mercado.infraestructura.schema.v1.eventos import EventoTransaccionCreada
+from src.propiedadesalpes.modulos.mercado.infraestructura.schema.v1.comandos import ComandoCrearTransaccion
 from src.propiedadesalpes.seedwork.infraestructura import utils
 
 class PikaMassenger():

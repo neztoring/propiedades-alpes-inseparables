@@ -1,7 +1,7 @@
 from .dto import TransaccionDTO
 from src.propiedadesalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador as RepMap
-from src.propiedadesalpes.modulos.propiedades.dominio.entidades import Transaccion
+from src.propiedadesalpes.modulos.mercado.dominio.entidades import Transaccion
 
 from datetime import datetime
 

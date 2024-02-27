@@ -9,7 +9,7 @@ def importar_modelos_alchemy():
     pass
 
 def comenzar_consumidor():
-    import src.propiedadesalpes.modulos.propiedades.infraestructura.consumidores as propiedades_consumidor
+    import src.propiedadesalpes.modulos.mercado.infraestructura.consumidores as propiedades_consumidor
     threading.Thread(target=propiedades_consumidor.suscribirse_a_eventos("eventos-transaccion")).start()
 
 def create_app(configuracion=None):
@@ -31,9 +31,9 @@ def create_app(configuracion=None):
 
     importar_modelos_alchemy()
 
-    from . import propiedades
+    from . import mercado
 
-    app.register_blueprint(propiedades.bp)
+    app.register_blueprint(mercado.bp)
 
     with app.app_context():
         db.create_all()

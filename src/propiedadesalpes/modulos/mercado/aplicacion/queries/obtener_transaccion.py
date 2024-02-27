@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from src.propiedadesalpes.seedwork.aplicacion.queries import Query, QueryResultado
 from src.propiedadesalpes.seedwork.aplicacion.queries import ejecutar_query as query
-from src.propiedadesalpes.modulos.propiedades.infraestructura.repositorios import RepositorioTransacciones
-from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccion
+from src.propiedadesalpes.modulos.mercado.infraestructura.repositorios import RepositorioTransacciones
+from src.propiedadesalpes.modulos.mercado.aplicacion.mapeadores import MapeadorTransaccion
 from .base import TransaccionQueryBaseHandler
 
 @dataclass

@@ -1,6 +1,6 @@
 from src.propiedadesalpes.seedwork.aplicacion.comandos import ComandoHandler
-from src.propiedadesalpes.modulos.propiedades.infraestructura.fabricas import FabricaRepositorio
-from src.propiedadesalpes.modulos.propiedades.dominio.fabricas import _FabricaTransaccion
+from src.propiedadesalpes.modulos.mercado.infraestructura.fabricas import FabricaRepositorio
+from src.propiedadesalpes.modulos.mercado.dominio.fabricas import _FabricaTransaccion
 
 class CrearTransaccionBaseHandler(ComandoHandler):
     def __init__(self):

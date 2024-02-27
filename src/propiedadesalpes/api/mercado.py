@@ -1,17 +1,17 @@
 import src.propiedadesalpes.seedwork.presentacion.api as api
 import json
-from src.propiedadesalpes.modulos.propiedades.aplicacion.servicios import ServicioTransaccion
+from src.propiedadesalpes.modulos.mercado.aplicacion.servicios import ServicioTransaccion
 from src.propiedadesalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import request, jsonify
 from flask import Response
-from src.propiedadesalpes.modulos.propiedades.aplicacion.mapeadores import MapeadorTransaccionDTOJson
-from src.propiedadesalpes.modulos.propiedades.aplicacion.comandos.crear_transaccion import CrearTransaccion
-from src.propiedadesalpes.modulos.propiedades.aplicacion.queries.obtener_transaccion import ObtenerTransaccion
+from src.propiedadesalpes.modulos.mercado.aplicacion.mapeadores import MapeadorTransaccionDTOJson
+from src.propiedadesalpes.modulos.mercado.aplicacion.comandos.crear_transaccion import CrearTransaccion
+from src.propiedadesalpes.modulos.mercado.aplicacion.queries.obtener_transaccion import ObtenerTransaccion
 from src.propiedadesalpes.seedwork.aplicacion.comandos import ejecutar_comando
 from src.propiedadesalpes.seedwork.aplicacion.queries import ejecutar_query
 
-bp = api.crear_blueprint('propiedades', '/propiedades')
+bp = api.crear_blueprint('mercado', '/mercado')
 
 
 @bp.route('/transaccion', methods=('POST',))
