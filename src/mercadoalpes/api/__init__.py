@@ -32,8 +32,10 @@ def create_app(configuracion=None):
     importar_modelos_alchemy()
 
     from . import mercado
+    from ...propiedadesalpes.api import propiedades
 
     app.register_blueprint(mercado.bp)
+    app.register_blueprint(propiedades.bp)
 
     with app.app_context():
         db.create_all()

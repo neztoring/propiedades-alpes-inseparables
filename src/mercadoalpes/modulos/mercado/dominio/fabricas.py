@@ -1,9 +1,11 @@
 from .entidades import Transaccion
 from .reglas import TienePropiedad
-from .excepciones import TipoObjetoNoExisteEnDominioPropiedadesExcepcion
+
+from .excepciones import TipoObjetoNoExisteEnDominioMercadoExcepcion
 from src.mercadoalpes.seedwork.dominio.repositorios import Mapeador
 from src.mercadoalpes.seedwork.dominio.fabricas import Fabrica
 from src.mercadoalpes.seedwork.dominio.entidades import Entidad
+
 from dataclasses import dataclass
 
 @dataclass
@@ -24,4 +26,4 @@ class FabricaHistorico(Fabrica):
             fabrica_transaccion = _FabricaTransaccion()
             return fabrica_transaccion.crear_objeto(obj, mapeador)
         else:
-            raise TipoObjetoNoExisteEnDominioPropiedadesExcepcion()
+            raise TipoObjetoNoExisteEnDominioMercadoExcepcion()

@@ -36,3 +36,6 @@ class RepositorioTransaccionesSQLite(RepositorioTransacciones):
     def eliminar(self, transaccion_id: UUID):
         # TODO
         raise NotImplementedError
+
+    def obtener_por_campo(self, campo: str) -> list[Transaccion]:
+        raise NotImplementedError
