@@ -1,8 +1,29 @@
-from src.propiedadesalpes.seedwork.aplicacion.dto import Mapeador as AppMap
+from src.propiedadesalpes.seedwork.aplicacion.dto import DTO, Mapeador as AppMap
+from src.propiedadesalpes.seedwork.aplicacion.dto import MapeadorList as AppMapList
 from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador as RepMap
 
 from .dto import PropiedadDTO
 from src.propiedadesalpes.modulos.propiedad.dominio.entidades import Propiedad
+
+class MapeadorListaPropiedadToJSON(AppMapList):
+    def externos_a_dtos(self, externo: list) -> list[PropiedadDTO]:
+        lista = []
+        for record in externo:
+            propiedad_dto = PropiedadDTO(
+                id_propiedad=record.get("id_propiedad"),
+                nombre_propiedad=record.get("nombre_propiedad"),
+                estado_propiedad=record.get("estado_propiedad"),
+                cliente_propiedad=record.get("cliente_propiedad")
+            )
+            lista.append(propiedad_dto)
+        return lista
+    
+    def dtos_a_externos(self, dto: list[PropiedadDTO]) -> list:
+        lista = []
+        for record in dto:
+            lista.append(record.__dict__)
+        return lista
+            
 
 class MapeadorPropiedadDTOJson(AppMap):
 

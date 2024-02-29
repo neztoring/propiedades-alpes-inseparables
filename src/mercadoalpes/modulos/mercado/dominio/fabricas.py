@@ -9,7 +9,7 @@ from src.mercadoalpes.seedwork.dominio.entidades import Entidad
 from dataclasses import dataclass
 
 @dataclass
-class _FabricaTransaccion(Fabrica):
+class FabricaTransaccion(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if isinstance(obj, Entidad):
             return mapeador.entidad_a_dto(obj)
@@ -23,7 +23,7 @@ class _FabricaTransaccion(Fabrica):
 class FabricaHistorico(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if mapeador.obtener_tipo() == Transaccion.__class__:
-            fabrica_transaccion = _FabricaTransaccion()
+            fabrica_transaccion = FabricaTransaccion()
             return fabrica_transaccion.crear_objeto(obj, mapeador)
         else:
             raise TipoObjetoNoExisteEnDominioMercadoExcepcion()
