@@ -13,10 +13,12 @@ class MapeadorTransaccion(Mapeador):
         transaccion_dto.fecha_actualizacion = entidad.fecha_actualizacion
         transaccion_dto.id = str(entidad.id)
         transaccion_dto.id_propiedad = str(entidad.id_propiedad)
+        transaccion_dto.tipo_transaccion = entidad.tipo_transaccion
 
         return transaccion_dto
 
     def dto_a_entidad(self, dto: TransaccionDTO) -> Transaccion:
-        transaccion = Transaccion(dto.id, dto.fecha_creacion, dto.fecha_actualizacion, dto.id_propiedad)
+        transaccion = Transaccion(dto.id, dto.fecha_creacion, dto.fecha_actualizacion, dto.id_propiedad,dto.tipo_transaccion)
         transaccion.id_propiedad = dto.id_propiedad
+        transaccion.tipo_transaccion=dto.tipo_transaccion
         return transaccion

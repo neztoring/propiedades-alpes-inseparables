@@ -26,7 +26,8 @@ class Despachador:
     def publicar_evento(self, evento, topico):
         payload = EventoTransaccionCreadaPayload(
             id_propiedad=str(evento.id_propiedad),
-            fecha_creacion=int(unix_time_millis(evento.fecha_evento))
+            fecha_creacion=int(unix_time_millis(evento.fecha_evento)),
+            tipo_transaccion=evento.tipo_transaccion
         )
         evento_integracion = EventoTransaccionCreada(data=payload)
         self._publicar_mensaje(evento_integracion.toJSON(), topico)        

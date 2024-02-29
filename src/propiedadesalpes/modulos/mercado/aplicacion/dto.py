@@ -7,6 +7,8 @@ class PropiedadDTO(DTO):
     fecha_actualizacion: str = field(default_factory=str)
     id: str = field(default_factory=str)
     name: str = field(default_factory=str)
+    estado_propiedad: str = field(default_factory=str)
+ 
 
 @dataclass(frozen=True)
 class TransaccionDTO(DTO):
@@ -14,3 +16,4 @@ class TransaccionDTO(DTO):
     fecha_actualizacion: str = field(default_factory=str)
     id: str = field(default_factory=str)
     id_propiedad: str = field(default_factory=str)
+    tipo_transaccion: str = field(default_factory=str)

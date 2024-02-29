@@ -37,7 +37,7 @@ def registrar_transaccion_asincrona():
         map_transaction = MapeadorTransaccionDTOJson()
         transaction_dto = map_transaction.externo_a_dto(transaction_dict)
 
-        comando = CrearTransaccion(transaction_dto.fecha_creacion, transaction_dto.fecha_actualizacion, transaction_dto.id, transaction_dto.id_propiedad)
+        comando = CrearTransaccion(transaction_dto.fecha_creacion, transaction_dto.fecha_actualizacion, transaction_dto.id, transaction_dto.id_propiedad,transaction_dto.tipo_transaccion)
         ejecutar_comando(comando)
         return Response({}, status=202, mimetype='application/json')
     except ExcepcionDominio as e:

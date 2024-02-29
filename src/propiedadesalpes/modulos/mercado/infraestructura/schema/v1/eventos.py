@@ -5,6 +5,7 @@ import json
 class EventoTransaccionCreadaPayload(Record):
     id_propiedad = String()
     fecha_creacion = Long()
+    tipo_transaccion = String()
 
 class EventoTransaccionCreada(EventoIntegracion):
     data = EventoTransaccionCreadaPayload()

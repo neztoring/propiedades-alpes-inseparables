@@ -8,3 +8,4 @@ import uuid
 class TransaccionCreada(EventoDominio):
     id_propiedad: str = None
     fecha_creacion: datetime = None
+    tipo_transaccion: str = None
