@@ -1,40 +1,193 @@
-version: '3.6'
-    
+version: '3'
+networks:
+  pulsar:
+    driver: bridge
+  sidecar:
+    driver: bridge
 services:
-  # Mensjeria
-  rabbitmq:
-    image: 'rabbitmq:3.6-management-alpine'
-    ports:
-      - '5672:5672' #The standard AMQP protocol port
-      - '15672:15672' #HTTP management UI
+# Start zookeeper
+  zookeeper:
+    image: apachepulsar/pulsar:latest
+    profiles: ["pulsar"]
+    container_name: zookeeper
+    restart: on-failure
+    networks:
+      - pulsar
+    volumes:
+      - ./data/zookeeper:/pulsar/data/zookeeper
     environment:
-      AMQP_URL: 'amqp;//rabbitmq?connection_attempts=5&retry_delay=5'
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
+      - metadataStoreUrl=zk:zookeeper:2181
+    command: >
+      bash -c "bin/apply-config-from-env.py conf/zookeeper.conf && \
+             bin/generate-zookeeper-config.sh conf/zookeeper.conf && \
+             exec bin/pulsar zookeeper"
     healthcheck:
-      test: rabbitmqctl status || exit 1
-      interval: 15s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-  
-  # Servicios de Propiedades de los Alpes
-  propiedadesalpes:
-    build: .
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    ports:
-      - "5001:5000"
+      test: ["CMD", "bin/pulsar-zookeeper-ruok.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
 
+# Init cluster metadata
+  pulsar-init:
+    container_name: pulsar-init
+    hostname: pulsar-init
+    image: apachepulsar/pulsar:latest
+    profiles: ["pulsar"]
+    networks:
+      - pulsar
+    command: >
+      bin/pulsar initialize-cluster-metadata \
+               --cluster cluster-a \
+               --zookeeper zookeeper:2181 \
+               --configuration-store zookeeper:2181 \
+               --web-service-url http://broker:8080 \
+               --broker-service-url pulsar://broker:6650
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+
+# Start bookie
+  bookie:
+    image: apachepulsar/pulsar:latest
+    profiles: ["pulsar"]
+    container_name: bookie
+    restart: on-failure
+    networks:
+      - pulsar
+    environment:
+      - clusterName=cluster-a
+      - zkServers=zookeeper:2181
+      - metadataServiceUri=metadata-store:zk:zookeeper:2181
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+      pulsar-init:
+        condition: service_completed_successfully
+  # Map the local directory to the container to avoid bookie startup failure due to insufficient container disks.
+    volumes:
+      - ./data/bookkeeper:/pulsar/data/bookkeeper
+    command: bash -c "bin/apply-config-from-env.py conf/bookkeeper.conf
+      && exec bin/pulsar bookie"
+
+# Start broker
+  broker:
+    image: apachepulsar/pulsar:latest
+    profiles: ["pulsar"]
+    container_name: broker
+    hostname: broker
+    restart: on-failure
+    networks:
+      - pulsar
+    environment:
+      - metadataStoreUrl=zk:zookeeper:2181
+      - zookeeperServers=zookeeper:2181
+      - clusterName=cluster-a
+      - managedLedgerDefaultEnsembleSize=1
+      - managedLedgerDefaultWriteQuorum=1
+      - managedLedgerDefaultAckQuorum=1
+      - advertisedAddress=broker
+      - advertisedListeners=external:pulsar://127.0.0.1:6650
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+      bookie:
+        condition: service_started
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    command: bash -c "bin/apply-config-from-env.py conf/broker.conf
+      &&  exec bin/pulsar broker"
+
+  # Servicios de PropiedadesAlpes
+  propiedadesalpes:
+    build:
+      context: .
+      dockerfile: propiedadesalpes.Dockerfile
+    container_name: propiedadesalpes
+    hostname: propiedadesalpes
+    image: propiedadesalpes/flask
+    profiles: ["propiedadesalpes", "monolito"]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
+    depends_on:
+      - broker
+    environment:
+      - MERCADOALPES_ADDRESS=mercadoalpes
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "5000:5000"
+  # Servicios de MercadoAlpes
+  mercadoalpes:
+    build:
+      context: .
+      dockerfile: mercadoalpes.Dockerfile
+    container_name: mercadoalpes
+    hostname: mercadoalpes
+    image: mercadoalpes/flask
+    profiles: [ "mercadoalpes", "monolito" ]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
+    depends_on:
+      - broker
+    environment:
+      - PROPIEDADES_ADDRESS=mercadoalpes
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "5001:5001"
   # Servicios de Clientes de los Alpes
   clientesalpes:
     build:
       context: .
       dockerfile: clientesalpes.Dockerfile
+    container_name: clientesalpes
+    hostname: clientesalpes
+    image: clientesalpes/flask
+    profiles: [ "clientesalpes", "monolito" ]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
     depends_on:
-      rabbitmq:
-        condition: service_healthy
+      - broker
+    environment:
+      - CLIENTESALPES_ADDRESS=clientesalpes
+      - PULSAR_ADDRESS=broker
     ports:
-      - "5002:5000"
-  
+      - "5001:5001"
+
+#version: '3.6'
+    
+#services:
+  # Mensjeria
+#  rabbitmq:
+#    image: 'rabbitmq:3.6-management-alpine'
+#    ports:
+#      - '5672:5672' #The standard AMQP protocol port
+#      - '15672:15672' #HTTP management UI
+#    environment:
+#      AMQP_URL: 'amqp;//rabbitmq?connection_attempts=5&retry_delay=5'
+#      RABBITMQ_DEFAULT_USER: "guest"
+#      RABBITMQ_DEFAULT_PASS: "guest"
+#    healthcheck:
+#      test: rabbitmqctl status || exit 1
+#      interval: 15s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+#
+#   Servicios de Propiedades de los Alpes
+#  propiedadesalpes:
+#    build: .
+#    depends_on:
+#      rabbitmq:
+#        condition: service_healthy
+#    ports:
+#      - "5001:5000"
+#

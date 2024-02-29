@@ -34,6 +34,8 @@ def create_app(configuracion=None):
 
     with app.app_context():
         db.create_all()
+        # consumidor_thread = threading.Thread(target=comenzar_consumidor)
+        # consumidor_thread.start()
     
     @app.route("/health-status")
     def health():
