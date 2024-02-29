@@ -18,7 +18,7 @@ def create_app(configuracion=None):
 
     # Configuracion de BD
     app.config['SQLALCHEMY_DATABASE_URI'] =\
-            'sqlite:///' + os.path.join(basedir, 'database.db')
+            'sqlite:///' + os.path.join(basedir, 'database2.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.secret_key = 'ef66b23d-bf07-4eb5-a8ea-1d6262bbc703'
     app.config['SESSION_TYPE'] = 'filesystem'
