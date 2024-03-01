@@ -1,4 +1,4 @@
-from src.propiedadesalpes.config.db import db
+from src.mercadoalpes.config.db import db
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, ForeignKey, Integer, Table, String
 

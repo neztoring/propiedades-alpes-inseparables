@@ -1,5 +1,5 @@
 from abc import ABC
-from src.propiedadesalpes.seedwork.dominio.repositorios import Repositorio
+from src.mercadoalpes.seedwork.dominio.repositorios import Repositorio
 
 class RepositorioTransacciones(Repositorio, ABC):
     ...

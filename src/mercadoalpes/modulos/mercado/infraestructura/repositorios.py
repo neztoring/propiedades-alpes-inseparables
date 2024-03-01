@@ -1,7 +1,7 @@
-from src.propiedadesalpes.config.db import db
-from src.propiedadesalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
-from src.propiedadesalpes.modulos.mercado.dominio.entidades import Transaccion
-from src.propiedadesalpes.modulos.mercado.dominio.fabricas import FabricaHistorico
+from src.mercadoalpes.config.db import db
+from src.mercadoalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
+from src.mercadoalpes.modulos.mercado.dominio.entidades import Transaccion
+from src.mercadoalpes.modulos.mercado.dominio.fabricas import FabricaHistorico
 from .dto import Transaccion as TransaccionDTO
 from .mapeadores import MapeadorTransaccion
 from uuid import UUID

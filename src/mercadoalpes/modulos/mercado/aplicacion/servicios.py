@@ -1,9 +1,9 @@
 from typing import Dict, Any
 
-from src.propiedadesalpes.seedwork.aplicacion.servicios import Servicio
-from src.propiedadesalpes.modulos.mercado.infraestructura.fabricas import FabricaRepositorio
-from src.propiedadesalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
-from src.propiedadesalpes.modulos.mercado.dominio.fabricas import FabricaHistorico
+from src.mercadoalpes.seedwork.aplicacion.servicios import Servicio
+from src.mercadoalpes.modulos.mercado.infraestructura.fabricas import FabricaRepositorio
+from src.mercadoalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
+from src.mercadoalpes.modulos.mercado.dominio.fabricas import FabricaHistorico
 from .dto import TransaccionDTO
 
 from .mapeadores import MapeadorTransaccion

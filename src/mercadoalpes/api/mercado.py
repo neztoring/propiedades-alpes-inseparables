@@ -1,15 +1,15 @@
-import src.propiedadesalpes.seedwork.presentacion.api as api
+import src.mercadoalpes.seedwork.presentacion.api as api
 import json
-from src.propiedadesalpes.modulos.mercado.aplicacion.servicios import ServicioTransaccion
-from src.propiedadesalpes.seedwork.dominio.excepciones import ExcepcionDominio
+from src.mercadoalpes.modulos.mercado.aplicacion.servicios import ServicioTransaccion
+from src.mercadoalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import request, jsonify
 from flask import Response
-from src.propiedadesalpes.modulos.mercado.aplicacion.mapeadores import MapeadorTransaccionDTOJson
-from src.propiedadesalpes.modulos.mercado.aplicacion.comandos.crear_transaccion import CrearTransaccion
-from src.propiedadesalpes.modulos.mercado.aplicacion.queries.obtener_transaccion import ObtenerTransaccion
-from src.propiedadesalpes.seedwork.aplicacion.comandos import ejecutar_comando
-from src.propiedadesalpes.seedwork.aplicacion.queries import ejecutar_query
+from src.mercadoalpes.modulos.mercado.aplicacion.mapeadores import MapeadorTransaccionDTOJson
+from src.mercadoalpes.modulos.mercado.aplicacion.comandos.crear_transaccion import CrearTransaccion
+from src.mercadoalpes.modulos.mercado.aplicacion.queries.obtener_transaccion import ObtenerTransaccion
+from src.mercadoalpes.seedwork.aplicacion.comandos import ejecutar_comando
+from src.mercadoalpes.seedwork.aplicacion.queries import ejecutar_query
 
 bp = api.crear_blueprint('mercado', '/mercado')
 

@@ -2,8 +2,6 @@ version: '3'
 networks:
   pulsar:
     driver: bridge
-  sidecar:
-    driver: bridge
 services:
 # Start zookeeper
   zookeeper:
@@ -108,7 +106,6 @@ services:
     image: propiedadesalpes/flask
     profiles: ["propiedadesalpes", "monolito"]
     networks:
-      - sidecar
       - pulsar
     labels:
       SidecarDiscover: "false"
@@ -130,7 +127,6 @@ services:
     image: mercadoalpes/flask
     profiles: [ "mercadoalpes", "monolito" ]
     networks:
-      - sidecar
       - pulsar
     labels:
       SidecarDiscover: "false"

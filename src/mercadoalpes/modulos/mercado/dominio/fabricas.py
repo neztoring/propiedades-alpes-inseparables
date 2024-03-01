@@ -1,9 +1,9 @@
 from .entidades import Transaccion
 from .reglas import TienePropiedad
 from .excepciones import TipoObjetoNoExisteEnDominioPropiedadesExcepcion
-from src.propiedadesalpes.seedwork.dominio.repositorios import Mapeador
-from src.propiedadesalpes.seedwork.dominio.fabricas import Fabrica
-from src.propiedadesalpes.seedwork.dominio.entidades import Entidad
+from src.mercadoalpes.seedwork.dominio.repositorios import Mapeador
+from src.mercadoalpes.seedwork.dominio.fabricas import Fabrica
+from src.mercadoalpes.seedwork.dominio.entidades import Entidad
 from dataclasses import dataclass
 
 @dataclass

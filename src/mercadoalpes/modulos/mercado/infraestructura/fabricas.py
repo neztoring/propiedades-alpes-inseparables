@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
-from src.propiedadesalpes.seedwork.dominio.fabricas import Fabrica
-from src.propiedadesalpes.seedwork.dominio.repositorios import Repositorio
-from src.propiedadesalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
+from src.mercadoalpes.seedwork.dominio.fabricas import Fabrica
+from src.mercadoalpes.seedwork.dominio.repositorios import Repositorio
+from src.mercadoalpes.modulos.mercado.dominio.repositorios import RepositorioTransacciones
 from .repositorios import RepositorioTransaccionesSQLite
 from .excepciones import ExcepcionFabrica, NoExisteImplementacionParaTipoFabricaExcepcion
 

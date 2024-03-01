@@ -9,8 +9,14 @@ def importar_modelos_alchemy():
     pass
 
 def comenzar_consumidor():
-    import src.propiedadesalpes.modulos.mercado.infraestructura.consumidores as propiedades_consumidor
-    threading.Thread(target=propiedades_consumidor.suscribirse_a_eventos("eventos-transaccion")).start()
+    import threading
+    import src.mercadoalpes.modulos.mercado.infraestructura.consumidores as mercado
+
+    # Suscripción a eventos
+    threading.Thread(target=mercado.suscribirse_a_eventos).start()
+
+    # Suscripción a comandos
+    threading.Thread(target=mercado.suscribirse_a_comandos).start()
 
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
@@ -24,10 +30,10 @@ def create_app(configuracion=None):
     app.config['SESSION_TYPE'] = 'filesystem'
 
      # Inicializa la DB
-    from src.propiedadesalpes.config.db import init_db
+    from src.mercadoalpes.config.db import init_db
     init_db(app)
 
-    from src.propiedadesalpes.config.db import db
+    from src.mercadoalpes.config.db import db
 
     importar_modelos_alchemy()
 
@@ -37,8 +43,8 @@ def create_app(configuracion=None):
 
     with app.app_context():
         db.create_all()
-        # consumidor_thread = threading.Thread(target=comenzar_consumidor)
-        # consumidor_thread.start()
+        if not app.config.get('TESTING'):
+            comenzar_consumidor()
     
     @app.route("/health-status")
     def health():
