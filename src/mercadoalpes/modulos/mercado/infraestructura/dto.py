@@ -12,3 +12,4 @@ class Transaccion(db.Model):
     fecha_creacion = db.Column(db.DateTime, nullable=False)
     fecha_actualizacion = db.Column(db.DateTime, nullable=False)
     id_propiedad = db.Column(db.String, primary_key=True, nullable=False)
+    tipo_transaccion = db.Column(db.String, nullable=False)

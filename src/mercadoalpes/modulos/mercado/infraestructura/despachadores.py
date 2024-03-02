@@ -4,6 +4,9 @@ from pulsar.schema import *
 from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.eventos import EventoTransaccionCreada, EventoTransaccionCreadaPayload
 from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.comandos import ComandoCrearTransaccion, ComandoCrearTransaccionPayload
 from src.mercadoalpes.seedwork.infraestructura import utils
+from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.eventos import EventoTransaccionCreada, EventoTransaccionCreadaPayload
+from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.comandos import ComandoCrearTransaccion, ComandoCrearTransaccionPayload
+from src.mercadoalpes.seedwork.infraestructura import utils
 
 import datetime, pika, json
 
@@ -65,7 +68,9 @@ class Despachador:
     def publicar_evento(self, evento, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
         payload = EventoTransaccionCreadaPayload(
-            id_propiedad=str(evento.id_reserva),
+            id_reserva=str(evento.id_reserva),
+            id_cliente=str(evento.id_cliente),
+            estado=str(evento.estado),
             fecha_creacion=int(unix_time_millis(evento.fecha_creacion))
         )
         evento_integracion = EventoTransaccionCreada(data=payload)
@@ -74,8 +79,7 @@ class Despachador:
     def publicar_comando(self, comando, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
         payload = ComandoCrearTransaccionPayload(
-            id_propiedad=str(comando.id_reserva),
-            fecha_creacion=int(unix_time_millis(comando.fecha_creacion))
+            id_usuario=str(comando.id_usuario)
             # agregar itinerarios
         )
         comando_integracion = ComandoCrearTransaccion(data=payload)

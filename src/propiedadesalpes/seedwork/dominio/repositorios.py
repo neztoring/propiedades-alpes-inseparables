@@ -23,6 +23,10 @@ class Repositorio(ABC):
     def eliminar(self, entity_id: UUID):
         ...
 
+    @abstractmethod
+    def obtener_por_campo(self, campo: str) -> list[Entidad]:
+        ...
+
 
 class Mapeador(ABC):
     @abstractmethod

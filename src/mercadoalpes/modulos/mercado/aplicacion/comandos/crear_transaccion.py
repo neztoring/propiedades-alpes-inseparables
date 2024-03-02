@@ -14,6 +14,8 @@ class CrearTransaccion(Comando):
     fecha_actualizacion: str
     id: str
     id_propiedad: str
+    tipo_transaccion: str
+    
 
 class CrearTransaccionHandler(CrearTransaccionBaseHandler):
     def handle(self, comando: CrearTransaccion):
@@ -21,7 +23,9 @@ class CrearTransaccionHandler(CrearTransaccionBaseHandler):
             fecha_actualizacion=comando.fecha_actualizacion,
             fecha_creacion=comando.fecha_creacion,
             id=comando.id,
-            id_propiedad=comando.id_propiedad
+            id_propiedad=comando.id_propiedad,
+            tipo_transaccion=comando.tipo_transaccion,
+
         )
 
         transaccion: Transaccion = self._fabrica_transacciones.crear_objeto(transaccion_dto, MapeadorTransaccion())

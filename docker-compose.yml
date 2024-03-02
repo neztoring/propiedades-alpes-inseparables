@@ -56,8 +56,6 @@ services:
       - clusterName=cluster-a
       - zkServers=zookeeper:2181
       - metadataServiceUri=metadata-store:zk:zookeeper:2181
-      - advertisedAddress=bookie
-      - BOOKIE_MEM=-Xms512m -Xmx512m -XX:MaxDirectMemorySize=256m
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -66,7 +64,7 @@ services:
   # Map the local directory to the container to avoid bookie startup failure due to insufficient container disks.
     volumes:
       - ./data/bookkeeper:/pulsar/data/bookkeeper
-    command: bash -c "bin/apply-config-from-env.py conf/bookkeeper.conf 
+    command: bash -c "bin/apply-config-from-env.py conf/bookkeeper.conf
       && exec bin/pulsar bookie"
 
 # Start broker
@@ -114,11 +112,10 @@ services:
     depends_on:
       - broker
     environment:
-      - PROPIEDADESALPES_ADDRESS=propiedadesalpes
+      - MERCADOALPES_ADDRESS=mercadoalpes
       - PULSAR_ADDRESS=broker
     ports:
-      - "5001:5000"
-
+      - "5000:5000"
   # Servicios de MercadoAlpes
   mercadoalpes:
     build:
@@ -135,14 +132,31 @@ services:
     depends_on:
       - broker
     environment:
-      - MERCADOALPES_ADDRESS=mercadoalpes
+      - PROPIEDADES_ADDRESS=mercadoalpes
       - PULSAR_ADDRESS=broker
     ports:
-      - "50051:5000"
-
-
-
-
+      - "5001:5001"
+  # Servicios de Clientes de los Alpes
+  clientesalpes:
+    build:
+      context: .
+      dockerfile: clientesalpes.Dockerfile
+    container_name: clientesalpes
+    hostname: clientesalpes
+    image: clientesalpes/flask
+    profiles: [ "clientesalpes", "monolito" ]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
+    depends_on:
+      - broker
+    environment:
+      - CLIENTESALPES_ADDRESS=clientesalpes
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "5001:5001"
 
 #version: '3.6'
     

@@ -47,7 +47,7 @@ def suscribirse_a_eventos():
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
         consumidor = cliente.subscribe('eventos-transaccion', consumer_type=_pulsar.ConsumerType.Shared,
-                                       subscription_name='mercadoalpes-sub-eventos',
+                                       subscription_name='aeroalpes-sub-eventos',
                                        schema=AvroSchema(EventoTransaccionCreada))
 
         while True:
