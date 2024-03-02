@@ -26,4 +26,15 @@ services:
         condition: service_healthy
     ports:
       - "5001:5000"
+
+  # Servicios de Clientes de los Alpes
+  clientesalpes:
+    build:
+      context: .
+      dockerfile: clientesalpes.Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5002:5000"
   
