@@ -146,7 +146,6 @@ services:
     image: clientesalpes/flask
     profiles: [ "clientesalpes", "monolito" ]
     networks:
-      - sidecar
       - pulsar
     labels:
       SidecarDiscover: "false"
