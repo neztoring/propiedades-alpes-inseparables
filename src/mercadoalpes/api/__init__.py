@@ -9,8 +9,8 @@ def importar_modelos_alchemy():
     pass
 
 def comenzar_consumidor():
-    import src.mercadoalpes.modulos.mercado.infraestructura.consumidores as propiedades_consumidor
-    threading.Thread(target=propiedades_consumidor.suscribirse_a_eventos("eventos-transaccion")).start()
+    import src.mercadoalpes.modulos.mercado.infraestructura.consumidores as mercado_consumidor
+    threading.Thread(target=mercado_consumidor.suscribirse_a_eventos("eventos-transaccion")).start()
 
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
@@ -32,10 +32,8 @@ def create_app(configuracion=None):
     importar_modelos_alchemy()
 
     from . import mercado
-    from ...propiedadesalpes.api import propiedades
 
     app.register_blueprint(mercado.bp)
-    app.register_blueprint(propiedades.bp)
 
     with app.app_context():
         db.create_all()

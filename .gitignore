@@ -161,4 +161,5 @@ cython_debug/
 
 /bin
 database.db
+database_propiedades.db
 /data
