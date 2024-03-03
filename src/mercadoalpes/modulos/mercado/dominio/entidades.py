@@ -17,5 +17,5 @@ class Transaccion(AgregacionRaiz):
         self.tipo_transaccion=transaccion.tipo_transaccion
         
 
-        self.agregar_evento(TransaccionCreada(tipo_transaccion=self.tipo_transaccion))
+        self.agregar_evento(TransaccionCreada(id_propiedad=self.id_propiedad, tipo_transaccion=self.tipo_transaccion))
 
