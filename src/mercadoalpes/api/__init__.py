@@ -8,15 +8,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def importar_modelos_alchemy():
     pass
 
-def comenzar_consumidor():
-    import threading
-    import src.mercadoalpes.modulos.mercado.infraestructura.consumidores as mercado
+#def comenzar_consumidor():
+    #import threading
+    #import src.mercadoalpes.modulos.mercado.infraestructura.consumidores as mercado
 
     # Suscripción a eventos
-    threading.Thread(target=mercado.suscribirse_a_eventos).start()
+    # threading.Thread(target=mercado.suscribirse_a_eventos).start()
 
     # Suscripción a comandos
-    threading.Thread(target=mercado.suscribirse_a_comandos).start()
+    # threading.Thread(target=mercado.suscribirse_a_comandos).start()
 
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
@@ -43,8 +43,8 @@ def create_app(configuracion=None):
 
     with app.app_context():
         db.create_all()
-        if not app.config.get('TESTING'):
-            comenzar_consumidor()
+        #if not app.config.get('TESTING'):
+            #comenzar_consumidor()
     
     @app.route("/health-status")
     def health():

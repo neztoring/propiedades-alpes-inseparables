@@ -5,8 +5,9 @@ from src.clientesalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import request, jsonify
 from flask import Response
-from src.clientesalpes.modulos.cliente.aplicacion.mapeadores import MapeadorClienteDTOJson
+from src.clientesalpes.modulos.cliente.aplicacion.mapeadores import MapeadorClienteDTOJson, MapeadorPropiedadDTOJson
 from src.clientesalpes.modulos.cliente.aplicacion.comandos.crear_cliente import CrearCliente
+from src.clientesalpes.modulos.cliente.aplicacion.comandos.crear_propiedad import CrearPropiedad
 from src.clientesalpes.modulos.cliente.aplicacion.queries.obtener_cliente import ObtenerCliente
 from src.clientesalpes.seedwork.aplicacion.comandos import ejecutar_comando
 from src.clientesalpes.seedwork.aplicacion.queries import ejecutar_query
@@ -41,6 +42,17 @@ def registrar_cliente_asincrona():
 
         comando = CrearCliente(transaction_dto.fecha_creacion, transaction_dto.fecha_actualizacion, transaction_dto.id, transaction_dto.id_cliente, transaction_dto.nombre_cliente, transaction_dto.tipo_cliente)
         ejecutar_comando(comando)
+
+        if "propiedad" in transaction_dict:
+            propiedad_dict = transaction_dict.get("propiedad")
+            propiedad_dict["cliente_propiedad"] = transaction_dto.id_cliente
+            map_propiedad = MapeadorPropiedadDTOJson()
+            propiedad_dto = map_propiedad.externo_a_dto(propiedad_dict)
+        
+            comando_propiedad = CrearPropiedad(propiedad_dto.cliente_propiedad, propiedad_dto.nombre_propiedad, propiedad_dto.estado_propiedad, propiedad_dto.id_propiedad)
+            ejecutar_comando(comando_propiedad)
+
+
         return Response({}, status=202, mimetype='application/json')
     except ExcepcionDominio as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')

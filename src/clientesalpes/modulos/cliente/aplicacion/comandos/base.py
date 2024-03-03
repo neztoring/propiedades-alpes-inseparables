@@ -14,3 +14,6 @@ class CrearClienteBaseHandler(ComandoHandler):
     @property
     def fabrica_clientes(self):
         return self._fabrica_clientes
+    
+class CrearPropiedadBaseHandler(ComandoHandler):
+    ...

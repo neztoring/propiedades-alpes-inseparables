@@ -8,7 +8,7 @@ from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.eventos import E
 from src.mercadoalpes.modulos.mercado.infraestructura.schema.v1.comandos import ComandoCrearTransaccion, ComandoCrearTransaccionPayload
 from src.mercadoalpes.seedwork.infraestructura import utils
 
-import datetime, pika, json
+import datetime, json
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
@@ -20,10 +20,10 @@ class Despachador:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
         publicador = cliente.create_producer(topico, schema=AvroSchema(EventoTransaccionCreada))
         publicador.send(mensaje)
+        print(f"===================== Mensaje publicado en [{topico}] =====================")
         cliente.close()
 
     def publicar_evento(self, evento, topico):
-        # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
         payload = EventoTransaccionCreadaPayload(
             id_propiedad=str(evento.id_propiedad),
             tipo_transaccion=str(evento.tipo_transaccion)
@@ -31,7 +31,8 @@ class Despachador:
         evento_integracion = EventoTransaccionCreada(data=payload)
         self._publicar_mensaje(evento_integracion, topico, AvroSchema(EventoTransaccionCreada))
 
-    def publicar_comando(self, comando, topico):
+     #Por ahora no es necesario que este servicio publique comandos, solamente eventos 
+    """def publicar_comando(self, comando, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
         payload = ComandoCrearTransaccionPayload(
             id_propiedad=str(comando.id_propiedad),
@@ -39,4 +40,4 @@ class Despachador:
             # agregar itinerarios
         )
         comando_integracion = ComandoCrearTransaccion(data=payload)
-        self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearTransaccion))
+        self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearTransaccion))"""

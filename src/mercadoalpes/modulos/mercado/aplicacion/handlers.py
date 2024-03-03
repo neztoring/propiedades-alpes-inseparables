@@ -6,7 +6,7 @@ class HandlerTransaccionIntegracion(Handler):
     @staticmethod
     def handle_transaccion_creada(evento):
         despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-transaccion')
+        despachador.publicar_evento(evento, 'eventos-mercado')
 
 
     

@@ -5,6 +5,7 @@ from .excepciones import IdDebeSerInmutableExcepcion
 from datetime import datetime
 import uuid
 from .eventos import EventoDominio
+from .comandos import ComandoDominio
 
 @dataclass
 class Entidad:
@@ -31,12 +32,19 @@ class Entidad:
 @dataclass
 class AgregacionRaiz(Entidad, ValidarReglasMixin):
     eventos: list[EventoDominio] = field(default_factory=list)
+    comandos: list[ComandoDominio] = field(default_factory=list)
 
     def agregar_evento(self, evento: EventoDominio):
         self.eventos.append(evento)
     
     def limpiar_eventos(self):
         self.eventos = list()
+    
+    def agregar_comando(self, comando: ComandoDominio):
+        self.comandos.append(comando)
+    
+    def limpiar_comandos(self):
+        self.comandos = list()
 
 
 @dataclass
