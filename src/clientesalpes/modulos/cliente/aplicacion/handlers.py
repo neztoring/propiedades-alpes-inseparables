@@ -3,11 +3,6 @@ from src.clientesalpes.modulos.cliente.infraestructura.despachadores import Desp
 
 class HandlerClienteIntegracion(Handler):
 
-    """@staticmethod
-    def handle_cliente_creada(evento):
-        despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-cliente')"""
-    
     @staticmethod
     def handle_crear_propiedad(comando):
         despachador = Despachador()
