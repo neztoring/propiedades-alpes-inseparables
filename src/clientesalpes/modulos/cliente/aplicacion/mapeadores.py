@@ -1,4 +1,4 @@
-from .dto import ClienteDTO
+from .dto import ClienteDTO, PropiedadDTO
 from src.clientesalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from src.clientesalpes.seedwork.dominio.repositorios import Mapeador as RepMap
 from src.clientesalpes.modulos.cliente.dominio.entidades import Cliente
@@ -40,3 +40,16 @@ class MapeadorCliente(RepMap):
         cliente.nombre_cliente = dto.nombre_cliente
         cliente.tipo_cliente = dto.tipo_cliente
         return cliente
+
+class MapeadorPropiedadDTOJson(AppMap):
+
+    def externo_a_dto(self, externo: dict) -> PropiedadDTO:
+        propiedad_dto = PropiedadDTO(
+            id_propiedad=externo.get("id_propiedad"),
+            nombre_propiedad=externo.get("nombre_propiedad"),
+            estado_propiedad="LIBRE",
+            cliente_propiedad=externo.get("cliente_propiedad"))
+        return propiedad_dto
+
+    def dto_a_externo(self, dto: PropiedadDTO) -> dict:
+        return dto.__dict__

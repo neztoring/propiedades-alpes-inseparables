@@ -8,10 +8,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def importar_modelos_alchemy():
     pass
 
-def comenzar_consumidor():
-    import src.clientesalpes.modulos.cliente.infraestructura.consumidores as propiedades_consumidor
-    threading.Thread(target=propiedades_consumidor.suscribirse_a_eventos("eventos-cliente")).start()
-
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
     app = Flask(__name__, instance_relative_config=True)
@@ -37,9 +33,7 @@ def create_app(configuracion=None):
 
     with app.app_context():
         db.create_all()
-        consumidor_thread = threading.Thread(target=comenzar_consumidor)
-        consumidor_thread.start()
-    
+
     @app.route("/health-status")
     def health():
         return {"status": "up"}
