@@ -27,15 +27,20 @@ class RepositorioPropiedadesSQLite(RepositorioPropiedades):
         db.session.commit()
 
     def actualizar(self, propiedad: Propiedad):
-        # TODO
-        raise NotImplementedError
+        propiedad_dto = db.session.query(PropiedadDTO).filter_by(id_propiedad=propiedad.id_propiedad).first()
+        propiedad_dto.nombre_cliente = propiedad.nombre_propiedad
+        propiedad_dto.estado_propiedad = propiedad.estado_propiedad
+        propiedad_dto.cliente_propiedad = propiedad.cliente_propiedad
+        db.session.add(propiedad_dto)
+        db.session.commit()
 
     def eliminar(self, id_propiedad: str):
         # TODO
         raise NotImplementedError
     
     def obtener_por_id(self, id: UUID) -> Propiedad:
-        raise NotImplementedError
+        propiedad_dto = db.session.query(PropiedadDTO).filter_by(id_propiedad=str(id)).first()
+        return self.fabrica_historicos.crear_objeto(propiedad_dto, MapeadorPropiedad())
     
     def obtener_todos(self) -> list[Propiedad]:
         raise NotImplementedError
