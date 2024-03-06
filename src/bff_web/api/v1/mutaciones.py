@@ -1,9 +1,10 @@
 import strawberry
 import typing
+import uuid
 
 from strawberry.types import Info
-from bff_web import utils
-from bff_web.despachadores import Despachador
+from src.bff_web import utils
+from src.bff_web.despachadores import Despachador
 
 from .esquemas import *
 

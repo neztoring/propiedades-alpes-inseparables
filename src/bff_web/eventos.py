@@ -1,7 +1,8 @@
 from pulsar.schema import *
-from src.mercadoalpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
+
 import json
-from mensajes import *
+from src.bff_web.mensajes import *
+from src.bff_web.eventointegracion import *
 
 class EventoTransaccionCreadaPayload(Record):
     id_propiedad = String()

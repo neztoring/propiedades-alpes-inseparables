@@ -10,16 +10,16 @@ class Despachador:
 
 
     async def publicar_evento(self, evento, topico):
-        payload = EventoTransaccionCreadaPayload(
-            id_propiedad=str(evento.data.id_propiedad),
-            tipo_transaccion=str(evento.data.tipo_transaccion)
-        )
-        evento_integracion = EventoTransaccionCreada(data=payload)
+        """ payload = EventoTransaccionCreadaPayload(
+            id_propiedad=str(evento.id_propiedad),
+            tipo_transaccion=str(evento.tipo_transaccion)
+        ) """
+        evento_integracion = EventoTransaccionCreada(data=evento)
         self._publicar_mensaje(evento_integracion, topico, AvroSchema(EventoTransaccionCreada))
 
 
 
-    async def _publicar_mensaje(self, mensaje, topico, schema):
+    def _publicar_mensaje(self, mensaje, topico, schema):
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
         publicador = cliente.create_producer(topico, schema=schema)
         publicador.send(mensaje)
