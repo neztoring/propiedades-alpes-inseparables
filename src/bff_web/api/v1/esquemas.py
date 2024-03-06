@@ -6,39 +6,38 @@ import os
 from datetime import datetime
 
 
-PROPIEDADES_HOST = os.getenv("PRORIEDADES_ADDRESS", default="localhost")
+MERCADO_HOST = os.getenv("MERCADO_ADDRESS", default="localhost")
+FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
-def obtener_propiedades(root) -> typing.List["Propiedad"]:
-    propiedades_json = requests.get(f'http://{PROPIEDADES_HOST}:5002/propiedades/propiedades-query').json()
-    propiedades = []
+def obtener_transacciones(root) -> typing.List["Transaccion"]:
+    transacciones_json = requests.get(f'http://{MERCADO_HOST}:5000/mercado/transaccion').json()
+    transacciones = []
 
-    for propiedad in propiedades_json:
-        propiedades.append(
-            Propiedad(
-                id_propiedad=propiedad.get('id_propiedad'), 
-                nombre_propiedad=propiedad.get('nombre_propiedad'), 
-                estado_propiedad=propiedad.get('estado_propiedad'), 
-                cliente_propiedad=propiedad.get('cliente_propiedad')
+    for transaccion in transacciones_json:
+        transacciones.append(
+             Transaccion(
+                id=transaccion.get('id'), 
+                id_propiedad=transaccion.get('id_propiedad'),
+                fecha_creacion=transaccion.get('fecha_creacion'),
+                fecha_actualizacion=transaccion.get('fecha_actualizacion')
+                #fecha_creacion=datetime.strptime(transaccion.get('fecha_creacion'), FORMATO_FECHA), 
+                #fecha_actualizacion=datetime.strptime(transaccion.get('fecha_actualizacion'), FORMATO_FECHA),
+                
             )
         )
 
-    return propiedades
+    return transacciones
 
 
 
 @strawberry.type
-class Propiedad:
+class Transaccion:
+    id: str
     id_propiedad: str
-    nombre_propiedad: str
-    estado_propiedad: str
-    cliente_propiedad: str
+    fecha_creacion: str
+    fecha_actualizacion: str
 
 
-
-@strawberry.type
-class PropiedadRespuesta:
-    mensaje: str
-    codigo: int
 
 
 

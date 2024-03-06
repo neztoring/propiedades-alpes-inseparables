@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r bff-requirements.txt
 
 COPY . .
 
-WORKDIR "/src"
+#WORKDIR "../src"
 
-CMD [ "uvicorn", "bff_web.main:app", "--host", "localhost", "--port", "8003", "--reload"]
+CMD [ "uvicorn", "src.bff_web.main:app", "--host", "localhost", "--port", "8003", "--reload"]
 

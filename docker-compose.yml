@@ -166,10 +166,10 @@ services:
     image: bbf_web/flask 
     profiles: ["bff", "monolito"]
     depends_on:
-      - propiedadesalpes
+      - mercadoalpes
       - broker
     environment:
-      - PRORIEDADES_ADDRESS=propiedadesalpes
+      - MERCADO_ADDRESS=mercadoalpes
       - BROKER_HOST=broker
     networks:
       - pulsar

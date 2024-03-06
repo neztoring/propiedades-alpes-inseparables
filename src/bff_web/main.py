@@ -12,7 +12,7 @@ from typing import Any
 
 
 
-from . import utils
+
 from .api.v1.router import router as v1
 
 
