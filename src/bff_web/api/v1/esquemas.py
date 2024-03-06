@@ -37,7 +37,10 @@ class Transaccion:
     fecha_creacion: str
     fecha_actualizacion: str
 
-
+@strawberry.type
+class TransaccionRespuesta:
+    mensaje: str
+    codigo: int
 
 
 
