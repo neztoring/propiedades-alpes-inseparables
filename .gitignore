@@ -160,6 +160,5 @@ cython_debug/
 #.idea/
 
 /bin
-database.db
-database_propiedades.db
+*database.db
 /data
