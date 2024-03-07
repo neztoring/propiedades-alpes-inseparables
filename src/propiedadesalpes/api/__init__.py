@@ -18,37 +18,34 @@ def comenzar_consumidor():
     # Suscripción a comandos
     threading.Thread(target=propiedad.suscribirse_a_comandos).start()
 
-def create_app(configuracion=None):
-    # Init la aplicacion de Flask
-    app = Flask(__name__, instance_relative_config=True)
+# Init la aplicacion de Flask
+app = Flask(__name__, instance_relative_config=True)
 
-    # Configuracion de BD
-    app.config['SQLALCHEMY_DATABASE_URI'] =\
-            'sqlite:///' + os.path.join(basedir, 'database_propiedades.db')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.secret_key = 'ef66b23d-bf07-4eb5-a8ea-1d6262bbc703'
-    app.config['SESSION_TYPE'] = 'filesystem'
+# Configuracion de BD
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+        'sqlite:///' + os.path.join(basedir, 'propiedades_database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'ef66b23d-bf07-4eb5-a8ea-1d6262bbc703'
+app.config['SESSION_TYPE'] = 'filesystem'
 
-     # Inicializa la DB
-    from src.propiedadesalpes.config.db import init_db
-    init_db(app)
+    # Inicializa la DB
+from src.propiedadesalpes.config.db import init_db
+init_db(app)
 
-    from src.propiedadesalpes.config.db import db
+from src.propiedadesalpes.config.db import db
 
-    importar_modelos_alchemy()
+importar_modelos_alchemy()
 
-    from . import propiedades
-    from ...propiedadesalpes.api import propiedades
+from . import propiedades
+from ...propiedadesalpes.api import propiedades
 
-    app.register_blueprint(propiedades.bp)
+app.register_blueprint(propiedades.bp)
 
-    with app.app_context():
-        db.create_all()
-        if not app.config.get('TESTING'):
-            comenzar_consumidor()
-    
-    @app.route("/health-status")
-    def health():
-        return {"status": "up"}
+with app.app_context():
+    db.create_all()
+    if not app.config.get('TESTING'):
+        comenzar_consumidor()
 
-    return app
+@app.route("/health-status")
+def health():
+    return {"status": "up"}

@@ -9,7 +9,7 @@ import uuid
 @dataclass
 class Propiedad(AgregacionRaiz):
     id_propiedad: uuid.UUID = field(hash=True, default=None)
-    nomnbre_propiedad: str = field(hash=True, default=None)
+    nombre_propiedad: str = field(hash=True, default=None)
     estado_propiedad: str = field(hash=True, default=None)
     cliente_propiedad: str = field(hash=True, default=None)
 
