@@ -42,7 +42,19 @@ class TransaccionRespuesta:
     mensaje: str
     codigo: int
 
+@strawberry.type
+class Propiedad:
+    id_propiedad: str
+    nombre_propiedad: str
+    estado_propiedad: str
+    cliente_propiedad: str
 
+
+
+@strawberry.type
+class PropiedadRespuesta:
+    mensaje: str
+    codigo: int
 
 
 
